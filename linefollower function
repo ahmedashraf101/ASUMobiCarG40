@@ -1,0 +1,23 @@
+byte L,R,C;
+L=digitalRead(pin10);
+R=digitalRead(pin11);
+C=digitalRead(pin12);
+void lineFollower(byte L,byte c, byte R)
+{
+  if(L==1 && R==0 &&C==0)
+  {
+    turnleft;
+  }
+  else if(L==0 && R==1 && c==0)
+  {
+    turnRight;
+  }
+  else if(L==0 && R==1 && c==0)
+  {
+    forward;
+    
+  }
+  
+}
+
+
