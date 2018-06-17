@@ -1,18 +1,19 @@
-#include <SoftwareSerial.h>
-
 // Setup Motor A (front and rear) pins
 #define PIN_R1 5
 #define PIN_R2 6
+#define PIN_R_enable 3
+
 
 // Setup Motor B (front and rear) pins
 #define PIN_L1 9
 #define PIN_L2 10
+#define PIN_L_enable 11
+
 
 // Setup Bluetooth
-#define TX 12
-#define RX 13
+#define TX 1
+#define RX 0
 
-SoftwareSerial BT(TX, RX); //TX, RX respetively
 
 unsigned long timer0 = 2000;  //Stores the time (in millis since execution started)
 unsigned long timer1 = 0;  //Stores the time when the last command was received from the phone
@@ -56,16 +57,21 @@ void setup() {
   pinMode (PIN_R2, OUTPUT);
   pinMode (PIN_L1, OUTPUT);
   pinMode (PIN_L2, OUTPUT);
+  pinMode (PIN_R_enable, OUTPUT);
+  pinMode (PIN_L_enable, OUTPUT);
+  digitalWrite (PIN_L_enable, HIGH);
+  digitalWrite (PIN_R_enable, HIGH);
 }
 
 void loop() {
   // Main code goes here and will run repeatedly:
 
-  if (BT.available()) {
+  if (serial.available()) {
     delay(10); //Delay added to make thing stable
 
     timer1 = millis();
-    command = BT.read();
+    command = Serial.read();
+    Serial.println(command);
 
     //Change pin mode only if new command is different from previous.
     if (command != prevCommand) {
